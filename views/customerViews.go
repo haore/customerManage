@@ -12,6 +12,34 @@ type customerViews struct {
 	customerService *service.CustomerService
 }
 
+func (acc *customerViews) delete() {
+	fmt.Println("----------------删除客户---------------")
+	fmt.Println("请选择要被删除用户的id(-1)退出")
+	var accId int = -1
+	fmt.Scanln(&accId)
+	if accId == -1 {
+		return
+	}
+	choice := ""
+	for {
+		fmt.Println("确认是否删除（Y/N）：")
+		fmt.Scanln(&choice)
+		if choice == "y" || choice == "Y" {
+			if acc.customerService.Delete(accId) {
+				fmt.Println("-----------删除成功-----------")
+			} else {
+				fmt.Println("-----------删除失败,id号不存在-----------")
+			}
+			break
+		} else if choice == "n" || choice =="N" {
+			fmt.Println("-----------取消删除-----------")
+			break
+		} else {
+			fmt.Println("请输入（y/n）")
+		}
+	}
+}
+
 func (acc *customerViews) add() {
 	fmt.Println("----------------添加客户---------------")
 	fmt.Println("姓名：")
@@ -63,7 +91,7 @@ func (acc *customerViews) mainMenu() {
 		case "2":
 			fmt.Println("修改客户")
 		case "3":
-			fmt.Println("删除客户")
+			acc.delete()
 		case "4":
 			acc.list()
 		case "5":

@@ -27,6 +27,27 @@ func (acc *CustomerService) Add(account model.Customer) bool {
 	return true
 }
 
+func (acc *CustomerService) Delete(id int) bool {
+	index := acc.FindById(id)
+	if index == -1 {
+		return false
+	} else {
+		acc.customers = append(acc.customers[:index], acc.customers[index+1:]...)
+		return true
+	}
+
+}
+
+func (acc *CustomerService) FindById(id int) int {
+	customers := acc.customers
+	for index, value := range customers {
+		if value.Id == id {
+			return index
+		}
+	}
+	return -1
+
+}
 //func (acc *CustomerService) Delete(id int) {
 //	customers := acc.customers
 //	customers = append(customers[0:id], customers[id+1:]
