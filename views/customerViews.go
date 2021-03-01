@@ -1,6 +1,7 @@
 package main
 
 import (
+	"customerManage/model"
 	"customerManage/service"
 	"fmt"
 )
@@ -9,6 +10,31 @@ type customerViews struct {
 	key             string
 	loop            bool
 	customerService *service.CustomerService
+}
+
+func (acc *customerViews) add() {
+	fmt.Println("----------------添加客户---------------")
+	fmt.Println("姓名：")
+	var name string
+	fmt.Scanln(&name)
+	fmt.Println("性别：")
+	var gender string
+	fmt.Scanln(&gender)
+	fmt.Println("年龄：")
+	var age int
+	fmt.Scanln(&age)
+	fmt.Println("电话：")
+	var phone string
+	fmt.Scanln(&phone)
+	fmt.Println("邮箱：")
+	var email string
+	fmt.Scanln(&email)
+	customer := model.NewCustomer2(name, gender, age, phone, email)
+	if acc.customerService.Add(customer) {
+		fmt.Println("----------------添加客户成功---------------")
+	} else {
+		fmt.Println("----------------添加客户失败---------------")
+	}
 }
 
 func (acc *customerViews) list() {
@@ -33,7 +59,7 @@ func (acc *customerViews) mainMenu() {
 		fmt.Scanln(&acc.key)
 		switch acc.key {
 		case "1":
-			fmt.Println("添加客户")
+			acc.add()
 		case "2":
 			fmt.Println("修改客户")
 		case "3":

@@ -20,10 +20,13 @@ func (acc *CustomerService) List() []model.Customer {
 	return acc.customers
 }
 
-//func (acc *CustomerService) Add(account model.Customer) {
-//	acc.customerNum ++
-//	acc.customers = append(acc.customers, account)
-//}
+func (acc *CustomerService) Add(account model.Customer) bool {
+	acc.customerNum ++
+	account.Id = acc.customerNum
+	acc.customers = append(acc.customers, account)
+	return true
+}
+
 //func (acc *CustomerService) Delete(id int) {
 //	customers := acc.customers
 //	customers = append(customers[0:id], customers[id+1:]

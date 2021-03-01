@@ -23,6 +23,17 @@ func NewCustomer(id int, name string, gender string,
 	}
 }
 
+func NewCustomer2 (name string, gender string,
+	age int, phone string, email string) Customer {
+	return Customer{
+		Name: name,
+		Gender: gender,
+		Age: age,
+		Phone: phone,
+		Email: email,
+	}
+}
+
 func (acc *Customer) GetCustomerInfo() {
 	fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", acc.Id, acc.Name, acc.Gender,
 		acc.Age, acc.Phone, acc.Email)
