@@ -12,6 +12,42 @@ type customerViews struct {
 	customerService *service.CustomerService
 }
 
+func (acc *customerViews) update() {
+	fmt.Println("----------------修改客户---------------")
+	fmt.Println("请选择需要需改的用户id（-1退出）")
+	getId := -1
+	fmt.Scanln(&getId)
+	if getId == -1 {
+		fmt.Println("退出用户修改")
+	} else {
+		customer := acc.customerService.List()
+		index := acc.customerService.FindById(getId)
+		fmt.Printf("姓名(%v)：", customer[index].Name)
+		var name string
+		fmt.Scanln(&name)
+		fmt.Printf("性别(%v)：", customer[index].Gender)
+		var gender string
+		fmt.Scanln(&gender)
+		fmt.Printf("年龄(%v)：", customer[index].Age)
+		var age int
+		fmt.Scanln(&age)
+		fmt.Printf("电话(%v)：", customer[index].Phone)
+		var phone string
+		fmt.Scanln(&phone)
+		fmt.Printf("邮箱(%v)：", customer[index].Email)
+		var email string
+		fmt.Scanln(&email)
+		acc.customerService.Update(index, name, gender, age, phone, email)
+	}
+
+
+	//
+	//} else {
+	//	acc.customerService.
+	//}
+	//fmt.Println("--------------修改客户完成---------------")
+}
+
 func (acc *customerViews) delete() {
 	fmt.Println("----------------删除客户---------------")
 	fmt.Println("请选择要被删除用户的id(-1)退出")
@@ -89,7 +125,7 @@ func (acc *customerViews) mainMenu() {
 		case "1":
 			acc.add()
 		case "2":
-			fmt.Println("修改客户")
+			acc.update()
 		case "3":
 			acc.delete()
 		case "4":
