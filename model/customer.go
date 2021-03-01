@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type Customer struct {
 	Id     int
 	Name   string
@@ -19,4 +21,9 @@ func NewCustomer(id int, name string, gender string,
 		phone,
 		email,
 	}
+}
+
+func (acc *Customer) GetCustomerInfo() {
+	fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", acc.Id, acc.Name, acc.Gender,
+		acc.Age, acc.Phone, acc.Email)
 }

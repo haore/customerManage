@@ -1,15 +1,27 @@
 package main
 
 import (
+	"customerManage/service"
 	"fmt"
 )
 
 type customerViews struct {
-	key  string
-	loop bool
+	key             string
+	loop            bool
+	customerService *service.CustomerService
 }
 
-func (acc *customerViews) MainMenu() {
+func (acc *customerViews) list() {
+	fmt.Println("----------------客户列表---------------")
+	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
+	customers := acc.customerService.List()
+	for _, value := range customers {
+		value.GetCustomerInfo()
+	}
+	fmt.Println("---------------客户列表完成--------------\n")
+}
+
+func (acc *customerViews) mainMenu() {
 	for {
 		fmt.Println("----------------客户信息管理软件---------------")
 		fmt.Println("                1.添加客户")
@@ -27,7 +39,7 @@ func (acc *customerViews) MainMenu() {
 		case "3":
 			fmt.Println("删除客户")
 		case "4":
-			fmt.Println("客户列表")
+			acc.list()
 		case "5":
 			var getLoop string
 			for {
@@ -43,7 +55,6 @@ func (acc *customerViews) MainMenu() {
 		default:
 			fmt.Println("请输入正确的序号")
 		}
-		fmt.Println(acc.loop)
 		if acc.loop {
 			fmt.Println("退出客户信息管理软件")
 			break
@@ -56,5 +67,6 @@ func main() {
 		key:  "",
 		loop: false,
 	}
-	customerViews.MainMenu()
+	customerViews.customerService = service.NewCustomerService()
+	customerViews.mainMenu()
 }
